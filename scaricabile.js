@@ -124,11 +124,17 @@ const jobs = [
     location: "US, NY, Saint Bonaventure",
   },
 ]
+//algoritmo di ricerca
 function filterwords(nameJob, nameLocation) {
   let filterwords = { result: [], count: 0 };
   for (let i = 0; i < jobs.length; i++) {
     let job = jobs[i]
 
+    if (nameJob == undefined && nameLocation == undefined) {
+      if (job.location.toLowerCase().includes(nameLocation.toLowerCase()) && job.title.toLowerCase().includes(nameJob.toLowerCase())) {
+        filterwords.result.push({ "title": job.title, "location": job.location })
+      }
+    }
     if (nameJob != null && nameLocation != null) {
       if (job.location.toLowerCase().includes(nameLocation.toLowerCase()) && job.title.toLowerCase().includes(nameJob.toLowerCase())) {
         filterwords.result.push({ "title": job.title, "location": job.location })
@@ -144,19 +150,21 @@ function filterwords(nameJob, nameLocation) {
         filterwords.result.push({ "title": job.title, "location": job.location })
       }
     }
+    
   }
   filterwords.count = filterwords.result.length;
   return filterwords
 }
-let inputTitle = document.getElementById("titleJob");
-let inputLocation = document.getElementById("locationJob");
-
+//output al click
 function screen() {
+  let inputTitle = document.getElementById("titleJob");
+  let inputLocation = document.getElementById("locationJob");
   let resultArrey = filterwords(inputTitle.value, inputLocation.value);
+  //per visualizzare il numero di risultati
   console.log("Results found " + resultArrey.count);
   tabella(resultArrey)
 }
-
+//output visivo con lista
 function tabella(ogetto) {
   let list = document.getElementById("risultato")
   list.innerHTML = " ";
